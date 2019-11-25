@@ -59,8 +59,9 @@ First clone https://github.com/ajengmira/gophonebook or copy source then go to p
 ```
 cd phonebook
 
-chmod +x run.sh
-./run.sh
+go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
+go install library
+migrate -source file://path/to/migrations -database mysql://user:password@tcp(host:port)/dbname?query
 
 go run main.go
 ```
