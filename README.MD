@@ -46,6 +46,7 @@ A simple phonebook/contacts manager.
 ## Required Packages
 - Dependency management
     * [dep](https://github.com/golang/dep)
+    * [migrate](https://github.com/mattes/migrate/cli)
 - Database
     * [MySql](https://github.com/go-sql-driver/mysql)
 - ORM   
@@ -61,7 +62,9 @@ cd phonebook
 
 go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
 go install library
-migrate -source file://path/to/migrations -database mysql://user:password@tcp(host:port)/dbname?query
+go build -tags 'mysql' -o install_path github.com/mattes/migrate/cli
+
+migrate -path ./db/migrations -database mysql://user:password@tcp(host:port)/dbname up
 
 go run main.go
 ```
