@@ -61,7 +61,7 @@ First clone https://github.com/ajengmira/gophonebook or copy source then go to p
 cd phonebook
 
 go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
-go install library
+
 go build -tags 'mysql' -o install_path github.com/mattes/migrate/cli
 
 migrate -path ./db/migrations -database mysql://user:password@tcp(host:port)/dbname up
