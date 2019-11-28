@@ -60,11 +60,20 @@ First clone https://github.com/ajengmira/gophonebook or copy source then go to p
 ```
 cd phonebook
 
-go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
+##go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
 
-go build -tags 'mysql' -o install_path github.com/mattes/migrate/cli
+go get -u github.com/golang/dep/cmd/dep
+go get -u github.com/golang-migrate/migrate
+go get -u github.com/go-sql-driver/mysql
+go get -u github.com/jinzhu/gorm
+go get -u github.com/gorilla/mux
+go get -u github.com/mattes/migrate
+
+go build -tags 'mysql' -o install_path github.com/golang-migrate/migrate
 
 migrate -path ./db/migrations -database mysql://user:password@tcp(host:port)/dbname up
+
+go build -tags 'mysql' -o ../bin/migrate github.com/mattes/migrate/cli
 
 go run main.go
 ```
