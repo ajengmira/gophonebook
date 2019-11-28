@@ -46,7 +46,7 @@ A simple phonebook/contacts manager.
 ## Required Packages
 - Dependency management
     * [dep](https://github.com/golang/dep)
-    * [migrate](https://github.com/mattes/migrate/cli)
+    * [migrate](https://github.com/golang-migrate/migrate)
 - Database
     * [MySql](https://github.com/go-sql-driver/mysql)
 - ORM   
