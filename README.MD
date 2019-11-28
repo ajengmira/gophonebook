@@ -50,9 +50,9 @@ A simple phonebook/contacts manager.
 - Database
     * [MySql](https://github.com/go-sql-driver/mysql)
 - ORM   
-    * [gorm](github.com/jinzhu/gorm)
+    * [gorm](https://github.com/jinzhu/gorm)
 - Routing
-    * [mux](github.com/gorilla/mux)
+    * [mux](https://github.com/gorilla/mux)
 
 ## Quick Run Project
 First clone https://github.com/ajengmira/gophonebook or copy source then go to phonebook folder.  
