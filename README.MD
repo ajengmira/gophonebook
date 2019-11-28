@@ -71,9 +71,9 @@ go get -u github.com/mattes/migrate
 
 go build -tags 'mysql' -o install_path github.com/golang-migrate/migrate
 
-migrate -path ./db/migrations -database mysql://user:password@tcp(host:port)/dbname up
+go build -tags 'mysql' -o c://go_project/bin/migrate github.com/mattes/migrate/cli
 
-go build -tags 'mysql' -o ../bin/migrate github.com/mattes/migrate/cli
+migrate -path ./db/migrations -database mysql://user:password@tcp(host:port)/dbname up
 
 go run main.go
 ```
