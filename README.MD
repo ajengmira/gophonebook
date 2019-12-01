@@ -72,6 +72,8 @@ go get -u github.com/go-sql-driver/mysql
 go get -u github.com/jinzhu/gorm
 go get -u github.com/gorilla/mux
 go get -u github.com/mattes/migrate
+go get -u github.com/joho/godotenv
+go get -u golang.org/x/crypto/bcrypt
 
 go build -tags 'mysql' -o install_path github.com/golang-migrate/migrate
 
