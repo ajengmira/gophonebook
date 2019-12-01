@@ -58,6 +58,10 @@ A simple phonebook/contacts manager.
 First clone https://github.com/ajengmira/gophonebook or copy source then go to phonebook folder.  
 
 ```
+##go to your db editor
+create database "phonebook"
+
+##go to your console
 cd phonebook
 
 ##go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
