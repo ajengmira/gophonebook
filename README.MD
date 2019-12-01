@@ -4,27 +4,20 @@ A simple phonebook/contacts manager.
 
 ## API ENDPOINTS
 
-### Create User
-- Path : `/api/account`
-- Method: `POST`
-- Fields: `username, email, password`
+### All Contact
+- Path : `/api/contacts`
+- Method: `GET`
 - Response: `200`
 
-### Login
-- Path : `/api/login`
-- Method: `POST`
-- Fields: `username, password`
-- Response: `200`
-
-### All Contact By User Id
-- Path : `/api/user/{id}/contacts`
+### Contact By Id
+- Path : `/api/contact/{id}`
 - Method: `GET`
 - Response: `200`
 
 ### Create Contact
 - Path : `/api/contact`
 - Method: `POST`
-- Fields: `contact_name, phone_number, user_id`
+- Fields: `contact_name, phone_number`
 - Response: `200`
 
 ### Details a Contact
