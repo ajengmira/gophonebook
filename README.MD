@@ -4,27 +4,20 @@ A simple phonebook/contacts manager.
 
 ## API ENDPOINTS
 
-### Create User
-- Path : `/api/account`
-- Method: `POST`
-- Fields: `username, email, password`
+### All Contact
+- Path : `/api/contacts`
+- Method: `GET`
 - Response: `200`
 
-### Login
-- Path : `/api/login`
-- Method: `POST`
-- Fields: `username, password`
-- Response: `200`
-
-### All Contact By User Id
-- Path : `/api/user/{id}/contacts`
+### Contact By Id
+- Path : `/api/contact/{id}`
 - Method: `GET`
 - Response: `200`
 
 ### Create Contact
 - Path : `/api/contact`
 - Method: `POST`
-- Fields: `contact_name, phone_number, user_id`
+- Fields: `contact_name, phone_number`
 - Response: `200`
 
 ### Details a Contact
@@ -46,23 +39,38 @@ A simple phonebook/contacts manager.
 ## Required Packages
 - Dependency management
     * [dep](https://github.com/golang/dep)
-    * [migrate](https://github.com/mattes/migrate/cli)
+    * [migrate](https://github.com/golang-migrate/migrate)
 - Database
     * [MySql](https://github.com/go-sql-driver/mysql)
 - ORM   
-    * [gorm](github.com/jinzhu/gorm)
+    * [gorm](https://github.com/jinzhu/gorm)
 - Routing
-    * [mux](github.com/gorilla/mux)
+    * [mux](https://github.com/gorilla/mux)
 
 ## Quick Run Project
 First clone https://github.com/ajengmira/gophonebook or copy source then go to phonebook folder.  
 
 ```
+##go to your db editor
+create database "phonebook"
+
+##go to your console
 cd phonebook
 
-go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
-go install library
-go build -tags 'mysql' -o install_path github.com/mattes/migrate/cli
+##go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
+
+go get -u github.com/golang/dep/cmd/dep
+go get -u github.com/golang-migrate/migrate
+go get -u github.com/go-sql-driver/mysql
+go get -u github.com/jinzhu/gorm
+go get -u github.com/gorilla/mux
+go get -u github.com/mattes/migrate
+go get -u github.com/joho/godotenv
+go get -u golang.org/x/crypto/bcrypt
+
+go build -tags 'mysql' -o install_path github.com/golang-migrate/migrate
+
+go build -tags 'mysql' -o c://go_project/bin/migrate github.com/mattes/migrate/cli
 
 migrate -path ./db/migrations -database mysql://user:password@tcp(host:port)/dbname up
 
