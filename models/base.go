@@ -31,8 +31,9 @@ func init() {
 		panic(errr)
 	}
 
-	db.Debug().AutoMigrate(&User{}, &Contact{})
+	db.Debug().AutoMigrate(&Contact{})
 	conn = db
+	db.LogMode(true)
 }
 
 func GetConn() (*gorm.DB) {

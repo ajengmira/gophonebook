@@ -7,10 +7,9 @@ func GetContact(Id uint) *Contact {
 	return contact
 }
 
-func GetUserContact(userId interface{}) *[]Contact {
+func GetContacts() *Contact {
 
-	var contacts []Contact
-
-	GetConn().Table("contacts").Where("user_id = ?", userId).Find(&contacts)
-	return &contacts
+	contact := &Contact{}
+	GetConn().Order("id desc").Find(&contact)
+	return contact
 }

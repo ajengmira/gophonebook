@@ -2,9 +2,10 @@ package controllers
 
 import (
 	"net/http"
-	"phonebook/models"
+	"gophonebook/models"
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"strconv"
 	"fmt"
 )
 
@@ -14,39 +15,60 @@ var CreateContact = func(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(contact)
 
 	if resp, ok := contact.Validate(); !ok {
-		Respond(w, resp)
+		var jsonData, err = json.Marshal(resp)
+		if err != nil {
+		    fmt.Println(err.Error())
+		    return
+		}
+
+		w.Header().Set("Content-Type", "application/json") // normal header
+		w.WriteHeader(http.StatusOK)
+		w.Write(jsonData)
 	}else {
 		resp = contact.Create()
-		Respond(w, resp)
+		var jsonData, err = json.Marshal(resp)
+		if err != nil {
+		    fmt.Println(err.Error())
+		    return
+		}
+
+		w.Header().Set("Content-Type", "application/json") // normal header
+		w.WriteHeader(http.StatusOK)
+		w.Write(jsonData) 
 	}
 }
 
-var GetUserContact = func(w http.ResponseWriter, r *http.Request) {
+var GetContacts = func(w http.ResponseWriter, r *http.Request) {
 
-	user := r.Context().Value("user")
-	fmt.Printf("%s %d %s", r.URL.Path, user, "\n")
-	params := mux.Vars(r)
+	contact := models.GetContacts()
+	resp := map[string]interface{} {"status" : true, "message" : "Request success", "contact" : contact}
+	var jsonData, err = json.Marshal(resp)
+	if err != nil {
+	    fmt.Println(err.Error())
+	    return
+	}
 
-	contacts := models.GetUserContact(params["id"])
-	resp := map[string]interface{} {"status" : true, "message" : "Request success", "contacts" : contacts}
-	Respond(w, resp)
-}
-
-var MyContact = func(w http.ResponseWriter, r *http.Request) {
-
-	user := r.Context().Value("user")
-	contacts := models.GetUserContact(user)
-	resp := map[string]interface{} {"status" : true, "message" : "Request success", "contacts" : contacts}
-	Respond(w, resp)
+	w.Header().Set("Content-Type", "application/json") // normal header
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonData)
 }
 
 var GetContact = func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := strconv.ParseUint(params["id"], 10, 32)
 
-	contact := models.GetContact(uint32(id))
+	contact := models.GetContact(uint(id))
 	resp := map[string]interface{} {"status" : true, "message" : "Request success", "contact" : contact}
-	Respond(w, resp)
+	 
+	var jsonData, err = json.Marshal(resp)
+	if err != nil {
+	    fmt.Println(err.Error())
+	    return
+	}
+
+	w.Header().Set("Content-Type", "application/json") // normal header
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonData)
 }
 
 var UpdateContact = func(w http.ResponseWriter, r *http.Request) {
@@ -58,18 +80,23 @@ var UpdateContact = func(w http.ResponseWriter, r *http.Request) {
 	phoneNumber := r.FormValue("phone_number")
 
 	// get the param id
-	mdl, err := models.GetContact(uint32(id))
+	mdl := models.GetContact(uint(id))
+	
+	contact := new(models.Contact)
+	contact.ContactName = contactName
+	contact.PhoneNumber = phoneNumber
+	contacts := mdl.Update(contact)
+	
+	resp := map[string]interface{} {"status" : true, "message" : "Request success", "contacts" : contacts}
+	var jsonData, err = json.Marshal(resp)
 	if err != nil {
-		RespondError(w, "Cannot find contact", http.StatusUnprocessableEntity)
-		return
+	    fmt.Println(err.Error())
+	    return
 	}
 
-	contact := new(models.Contact)
-	contact.Name = contactName
-	contact.NameEN = phoneNumber
-
-	resp = mdl.Update(contact)
-	Respond(w, resp)
+	w.Header().Set("Content-Type", "application/json") // normal header
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonData)
 }
 
 var DeleteContact = func(w http.ResponseWriter, r *http.Request) {
@@ -78,8 +105,19 @@ var DeleteContact = func(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.ParseUint(params["id"], 10, 32)
 
 	// get the param id
-	contact := models.GetContact(uint32(id))
+	mdl := models.GetContact(uint(id))
 
-	resp = contact.Delete()
-	Respond(w, resp)
+	contact := new(models.Contact)
+	contact.ID = uint(id)
+	contacts := mdl.Delete(contact)
+	resp := map[string]interface{} {"status" : true, "message" : "Request success", "contacts" : contacts}
+	var jsonData, err = json.Marshal(resp)
+	if err != nil {
+	    fmt.Println(err.Error())
+	    return
+	}
+
+	w.Header().Set("Content-Type", "application/json") // normal header
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonData)
 }
